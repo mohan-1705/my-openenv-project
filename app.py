@@ -2,23 +2,18 @@ from fastapi import FastAPI
 from env import SimpleEnv
 
 app = FastAPI()
+env = SimpleEnv()
 
-@app.get("/")
-def run_env():
-    env = SimpleEnv()
+@app.post("/reset")
+def reset():
     state = env.reset()
+    return {"state": state}
 
-    results = []
+@app.post("/step")
+def step(action: dict):
+    result = env.step(action.get("action", 1))
+    return result
 
-    for i in range(5):
-        action = "increase"
-        state, reward, done, _ = env.step(action)
-        results.append({
-            "step": i,
-            "state": state,
-            "reward": reward
-        })
-        if done:
-            break
-
-    return {"output": results}
+@app.get("/state")
+def get_state():
+    return {"state": env.state}
