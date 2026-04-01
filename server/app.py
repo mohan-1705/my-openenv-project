@@ -1,9 +1,8 @@
 from fastapi import FastAPI
-from env import MyEnv
-import uvicorn
+from env import SimpleEnv
 
 app = FastAPI()
-env = MyEnv()
+env = SimpleEnv()
 
 @app.get("/")
 def home():
@@ -11,21 +10,13 @@ def home():
 
 @app.post("/reset")
 def reset():
-    return env.reset()
+    return {"state": env.reset()}
 
 @app.post("/step")
 def step():
-    state, reward, done, _ = env.step()
-    return {
-        "state": state,
-        "reward": reward,
-        "done": done
-    }
+    return env.step()
 
-# ✅ IMPORTANT MAIN FUNCTION
-def main():
-    uvicorn.run("server.app:app", host="0.0.0.0", port=7860)
-
-# ✅ REQUIRED FOR VALIDATION
-if __name__ == "__main__":
-    main()
+#  NEW (for evaluation)
+@app.get("/tasks")
+def tasks():
+    return env.get_tasks()
