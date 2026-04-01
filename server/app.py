@@ -16,7 +16,7 @@ def reset():
 def step():
     return env.step()
 
-#  NEW (for evaluation)
+
 @app.get("/tasks")
 def tasks():
     return env.get_tasks()
