@@ -1,4 +1,4 @@
-class SimpleEnv:
+class MyEnv:
     def __init__(self):
         self.state = 0
 
@@ -6,13 +6,8 @@ class SimpleEnv:
         self.state = 0
         return {"state": self.state}
 
-    def step(self, action):
+    def step(self):
         self.state += 1
         reward = 1
         done = self.state >= 5
-
-        return {
-            "state": {"state": self.state},
-            "reward": reward,
-            "done": done
-        }
+        return {"state": self.state}, reward, done, {}
