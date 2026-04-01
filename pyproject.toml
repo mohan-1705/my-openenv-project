@@ -1,0 +1,11 @@
+[project]
+name = "my_openenv_project"
+version = "0.1.0"
+description = "Simple OpenEnv RL environment"
+authors = [
+    {name = "Mohan Rangaji"}
+]
+dependencies = [
+    "fastapi",
+    "uvicorn"
+]
