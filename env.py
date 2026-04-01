@@ -1,28 +1,18 @@
 class SimpleEnv:
     def __init__(self):
-        self.state_val = 0
-        self.steps = 0
+        self.state = 0
 
     def reset(self):
-        self.state_val = 0
-        self.steps = 0
-        return {"state": self.state_val}
+        self.state = 0
+        return {"state": self.state}
 
     def step(self, action):
-        self.steps += 1
+        self.state += 1
+        reward = 1
+        done = self.state >= 5
 
-        if action == "increase":
-            self.state_val += 1
-            reward = 1
-        elif action == "decrease":
-            self.state_val -= 1
-            reward = -1
-        else:
-            reward = 0
-
-        done = self.steps >= 5
-
-        return {"state": self.state_val}, reward, done, {}
-
-    def state(self):
-        return {"state": self.state_val}
+        return {
+            "state": {"state": self.state},
+            "reward": reward,
+            "done": done
+        }
