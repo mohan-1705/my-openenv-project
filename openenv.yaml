@@ -1,10 +1,12 @@
-name: simple-openenv
+name: simple-env
 version: 1.0
+
+entrypoint: env.py
 
 tasks:
   - name: easy
-    goal: 3
+    goal: Increase value to 2
   - name: medium
-    goal: 6
+    goal: Increase value to 3
   - name: hard
-    goal: 10
+    goal: Increase value to 5
