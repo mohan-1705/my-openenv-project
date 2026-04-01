@@ -4,16 +4,18 @@ from env import SimpleEnv
 app = FastAPI()
 env = SimpleEnv()
 
+@app.get("/")
+def home():
+    return {"message": "API Running"}
+
 @app.post("/reset")
 def reset():
-    state = env.reset()
-    return {"state": state}
+    return {"state": env.reset()}
 
 @app.post("/step")
 def step(action: dict):
-    result = env.step(action.get("action", 1))
-    return result
+    return env.step(action.get("action", 1))
 
 @app.get("/state")
-def get_state():
+def state():
     return {"state": env.state}
