@@ -1,12 +1,33 @@
-from env import SimpleEnv
+import os
+from openai import OpenAI
 
-env = SimpleEnv()
-state = env.reset()
+print("START")
 
-for i in range(5):
-    action = "increase"   # simple baseline
-    state, reward, done, _ = env.step(action)
-    print(f"Step {i}, State: {state}, Reward: {reward}")
+# Load environment variables
+API_BASE_URL = os.getenv("API_BASE_URL")
+MODEL_NAME = os.getenv("MODEL_NAME")
+HF_TOKEN = os.getenv("HF_TOKEN")
 
-    if done:
-        break
+print("STEP: Environment variables loaded")
+
+# Initialize client
+client = OpenAI(
+    base_url=API_BASE_URL,
+    api_key=HF_TOKEN
+)
+
+print("STEP: Client initialized")
+
+# Run inference
+response = client.chat.completions.create(
+    model=MODEL_NAME,
+    messages=[
+        {"role": "user", "content": "Hello"}
+    ]
+)
+
+print("STEP: Response generated")
+
+print(response.choices[0].message.content)
+
+print("END")
